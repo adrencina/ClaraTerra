@@ -21,8 +21,7 @@ import androidx.navigation.NavController
 import com.example.claraterra.R
 import com.example.claraterra.ui.component.BottomNavigationBar
 import com.example.claraterra.ui.component.ScreenContainer
-import com.example.claraterra.ui.component.SemiCircleChart
-import com.example.claraterra.ui.screen.balance.sections.component.chartPie
+import com.example.claraterra.ui.screen.balance.sections.component.ChartPie
 
 
 @Composable
@@ -33,8 +32,7 @@ fun BalanceScreen(
     val textLosses = remember { mutableStateOf("Valor Gastos") }
     val textSales = remember { mutableStateOf("Valor Ventas") }
     val textProfit = remember { mutableStateOf("Valor Utilidad") }
-    val textValBalanceTitle = remember { mutableStateOf("1") }
-    val textBalanceTitle = "BALANCE DEL DIA: "
+    val textBalanceTitle = "BALANCE DEL DIA"
     val lossesDay = "Gastos del dia"
     val salesDay = "Ventas del dia"
 
@@ -83,92 +81,20 @@ fun BalanceScreen(
                     .fillMaxSize()
                     .padding(20.dp),
             ) {
-                chartPie(
-                    modifier = ( Modifier
-                        .fillMaxWidth()
-                        .weight(2f)
-                        .align(Alignment.CenterHorizontally)),
-                    porcentajes = arrayOf(0.5f,0.25f,0.10f)
+
+
+                // Escenario de GANANCIA
+
+                Spacer(modifier = Modifier.height(16.dp))
+                ChartPie(
+                    modifier = Modifier
+                        .fillMaxWidth() // El ChartPie llena el ancho de su Column padre (que es 1f del Row)
+                        .weight(6f),   // Permite que el ChartPie use la altura disponible dentro de este Column
+                    earnings = 2000f,//ganancias
+                    expenses = 800f//gastos
                 )
 
-                Spacer(modifier = Modifier.weight(0.2f))
 
-                Row {
-                    Box(
-                        modifier = Modifier
-                            .size(10.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(color = Color(0xFF7D496A))
-                            .align(Alignment.CenterVertically)
-                    )
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Text(
-                        text = "Gastos $",
-                        fontSize = 18.sp
-                    )
-
-                    Text(
-                        text = textLosses.value,
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.weight(9f))
-
-                }
-
-
-                Row {
-                    Box(
-                        modifier = Modifier
-                            .size(10.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(color = Color(0xFF7D496A))
-                            .align(alignment = Alignment.CenterVertically)
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Text(
-                        text = "Ventas $",
-                        fontSize = 18.sp
-                    )
-
-                    Text(
-                        text = textSales.value,
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.weight(9f))
-
-                }
-
-                Row {
-                    Box(
-                        modifier = Modifier
-                            .size(10.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(color = Color(0xFF7D496A))
-                            .align(Alignment.CenterVertically)
-                    )
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-
-                    Text(
-                        text = "Utilidad $",
-                        fontSize = 18.sp
-                    )
-
-                    Text(
-                        text = textProfit.value,
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.weight(9f))
-
-                }
-                Spacer(modifier = Modifier.weight(0.2f))
 
                 Row {
                     Spacer(modifier = Modifier.weight(2f))
@@ -177,30 +103,8 @@ fun BalanceScreen(
                         text = textBalanceTitle,
                         fontSize = 18.sp
                     )
-                    Text(
-                        text = textValBalanceTitle.value,
-                        fontSize = 18.sp
-                    )
 
                     Spacer(modifier = Modifier.weight(2f))
-
-                    Box(
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .paint(painterResource(id = R.drawable.arrowleft))
-                            .align(Alignment.CenterVertically)
-                    )
-
-                    Spacer(modifier = Modifier.weight(0.5f))
-
-                    Box(
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .paint(painterResource(id = R.drawable.arrowright))
-                            .align(Alignment.CenterVertically)
-                    )
                 }
 
                 Spacer(modifier = Modifier.weight(0.1f))
@@ -214,13 +118,17 @@ fun BalanceScreen(
                 )
 
 
-                Row (modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(4f)){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(4f)
+                ) {
 
-                    Column(modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f)){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                    ) {
 
                         Text(
                             text = salesDay,
@@ -238,9 +146,11 @@ fun BalanceScreen(
                     }
                     Spacer(modifier = Modifier.weight(0.05f))
 
-                    Column (modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f)){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                    ) {
                         Text(
                             text = lossesDay,
                             fontSize = 18.sp
